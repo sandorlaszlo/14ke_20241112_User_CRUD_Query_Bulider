@@ -1,16 +1,17 @@
 <x-layout>
 
-    <h1>Create new user</h1>
+    <h1>Update user</h1>
 
     @if (session()->has('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
-    <form method="POST" action="/users">
+    <form method="POST" action="/users/{{ $user->id }}">
         @csrf
+        @method('PATCH')
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}">
+            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name') ?? $user->name}}">
             @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -18,7 +19,7 @@
 
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{old('email')}}">
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{old('email') ?? $user->email}}">
             @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
